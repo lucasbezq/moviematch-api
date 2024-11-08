@@ -19,7 +19,7 @@ public class Genre {
     @EqualsAndHashCode.Include
     private Long id;
     private String uuid;
-    private String nome;
+    private String name;
 
     @ManyToMany(mappedBy = "genres")
     private Set<Movie> movies = new HashSet<>();

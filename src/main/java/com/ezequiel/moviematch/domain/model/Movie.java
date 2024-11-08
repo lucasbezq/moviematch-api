@@ -1,11 +1,9 @@
 package com.ezequiel.moviematch.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
