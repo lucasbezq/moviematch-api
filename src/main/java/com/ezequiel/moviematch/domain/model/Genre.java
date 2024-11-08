@@ -1,13 +1,12 @@
 package com.ezequiel.moviematch.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Data
@@ -23,5 +22,16 @@ public class Genre {
 
     @ManyToMany(mappedBy = "genres")
     private Set<Movie> movies = new HashSet<>();
+
+    @PrePersist
+    private void generateUuid() {
+        setUuid(UUID.randomUUID().toString());
+    }
+
+    public Genre(String name) {
+        this.name = name;
+    }
+
+    public Genre() {}
 
 }

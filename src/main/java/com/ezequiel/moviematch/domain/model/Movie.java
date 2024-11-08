@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Data
@@ -28,5 +29,10 @@ public class Movie {
     @JoinTable(name = "movie_genre", joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private Set<Genre> genres = new HashSet<>();
+
+    @PrePersist
+    private void generateUuid() {
+        setUuid(UUID.randomUUID().toString());
+    }
 
 }
