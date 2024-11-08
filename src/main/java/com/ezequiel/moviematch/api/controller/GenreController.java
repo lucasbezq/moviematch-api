@@ -1,6 +1,6 @@
 package com.ezequiel.moviematch.api.controller;
 
-import com.ezequiel.moviematch.api.converter.GenreRecordConverter;
+import com.ezequiel.moviematch.api.converter.genre.GenreRecordConverter;
 import com.ezequiel.moviematch.api.record.genre.GenreRecord;
 import com.ezequiel.moviematch.domain.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;

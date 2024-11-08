@@ -1,8 +1,8 @@
 package com.ezequiel.moviematch.api.controller;
 
-import com.ezequiel.moviematch.api.converter.MovieConverter;
-import com.ezequiel.moviematch.api.converter.MovieRecordConverter;
-import com.ezequiel.moviematch.api.converter.MovieSummaryRecordConverter;
+import com.ezequiel.moviematch.api.converter.movie.MovieConverter;
+import com.ezequiel.moviematch.api.converter.movie.MovieRecordConverter;
+import com.ezequiel.moviematch.api.converter.movie.MovieSummaryRecordConverter;
 import com.ezequiel.moviematch.api.record.movie.MovieRecord;
 import com.ezequiel.moviematch.api.record.movie.MovieSummaryRecord;
 import com.ezequiel.moviematch.api.record.request.MovieRequest;

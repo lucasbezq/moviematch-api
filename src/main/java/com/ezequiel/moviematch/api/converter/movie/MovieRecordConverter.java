@@ -1,4 +1,4 @@
-package com.ezequiel.moviematch.api.converter;
+package com.ezequiel.moviematch.api.converter.movie;
 
 import com.ezequiel.moviematch.api.record.genre.GenreRecord;
 import com.ezequiel.moviematch.api.record.movie.MovieRecord;
