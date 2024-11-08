@@ -10,8 +10,6 @@ import java.util.stream.Collectors;
 @Component
 public class MovieRecordConverter {
 
-
-
     public MovieRecord toRecord(Movie movie) {
 
         var genreRecords = movie.getGenres().stream()

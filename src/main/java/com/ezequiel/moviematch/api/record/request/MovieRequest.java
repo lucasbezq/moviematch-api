@@ -9,9 +9,9 @@ import java.util.Set;
 
 public record MovieRequest(@NotBlank String title,
                            @NotBlank String duration,
-                           @NotBlank String rating,
                            @NotBlank String imageUrl,
                            @NotBlank String synopsis,
+                           @NotNull Double rating,
                            @NotNull Integer releaseYear,
                            @NotNull @Valid Set<GenreRequest> genres) {
 }
