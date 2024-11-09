@@ -24,6 +24,7 @@ public class MovieConverter {
         model.setTitle(movieRequest.title());
         model.setDuration(movieRequest.duration());
         model.setSynopsis(movieRequest.synopsis());
+        model.setRating(movieRequest.rating());
         model.setReleaseYear(movieRequest.releaseYear());
         model.setImageUrl(movieRequest.imageUrl());
         model.setGenres(genres);

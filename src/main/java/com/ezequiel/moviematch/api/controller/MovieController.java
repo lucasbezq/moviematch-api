@@ -6,7 +6,6 @@ import com.ezequiel.moviematch.api.converter.movie.MovieSummaryRecordConverter;
 import com.ezequiel.moviematch.api.record.movie.MovieRecord;
 import com.ezequiel.moviematch.api.record.movie.MovieSummaryRecord;
 import com.ezequiel.moviematch.api.record.request.MovieRequest;
-import com.ezequiel.moviematch.domain.repository.GenreRepository;
 import com.ezequiel.moviematch.domain.repository.MovieRepository;
 import com.ezequiel.moviematch.domain.service.MovieService;
 import com.ezequiel.moviematch.domain.service.SearchMovieService;
@@ -23,9 +22,6 @@ public class MovieController {
 
     @Autowired
     private MovieRepository movieRepository;
-
-    @Autowired
-    private GenreRepository genreRepository;
 
     @Autowired
     private MovieSummaryRecordConverter movieSummaryRecordConverter;
@@ -60,6 +56,12 @@ public class MovieController {
         var movie = movieConverter.toModel(movieRequest);
         var newMovie = movieService.add(movie);
         return movieRecordConverter.toRecord(newMovie);
+    }
+
+    @GetMapping("/recommendations/{genderUuid}")
+    public List<MovieSummaryRecord> recommendations(@PathVariable String genderUuid) {
+        var movies = movieService.recommendMovies(genderUuid);
+        return movieSummaryRecordConverter.toCollectionRecord(movies);
     }
 
 }

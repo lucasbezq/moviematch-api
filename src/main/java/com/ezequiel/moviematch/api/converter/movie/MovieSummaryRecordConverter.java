@@ -4,6 +4,7 @@ import com.ezequiel.moviematch.api.record.movie.MovieSummaryRecord;
 import com.ezequiel.moviematch.domain.model.Movie;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,7 +21,7 @@ public class MovieSummaryRecordConverter {
         );
     }
 
-    public List<MovieSummaryRecord> toCollectionRecord(List<Movie> movies) {
+    public List<MovieSummaryRecord> toCollectionRecord(Collection<Movie> movies) {
         return movies.stream()
                 .map(this::toRecord)
                 .collect(Collectors.toList());
