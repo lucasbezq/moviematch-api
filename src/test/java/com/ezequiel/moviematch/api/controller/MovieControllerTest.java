@@ -3,6 +3,8 @@ package com.ezequiel.moviematch.api.controller;
 import com.ezequiel.moviematch.api.converter.movie.MovieConverter;
 import com.ezequiel.moviematch.api.converter.movie.MovieRecordConverter;
 import com.ezequiel.moviematch.api.converter.movie.MovieSummaryRecordConverter;
+import com.ezequiel.moviematch.api.record.genre.GenreRecord;
+import com.ezequiel.moviematch.api.record.movie.MovieRecord;
 import com.ezequiel.moviematch.api.record.movie.MovieSummaryRecord;
 import com.ezequiel.moviematch.domain.model.Movie;
 import com.ezequiel.moviematch.domain.repository.MovieRepository;
@@ -19,7 +21,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -55,7 +59,8 @@ public class MovieControllerTest {
     private MovieService movieService;
 
     private List<Movie> movies;
-    private List<MovieSummaryRecord> moviesRecord;
+    private List<MovieSummaryRecord> moviesSummaryRecord;
+    private MovieRecord movieRecord;
 
     @BeforeEach
     void setup() {
@@ -68,7 +73,7 @@ public class MovieControllerTest {
                 1998
         );
 
-        var movie2= new Movie(
+        var movie2 = new Movie(
                 "A Lista de Schindler",
                 "3h 15min",
                 9.0,
@@ -79,20 +84,33 @@ public class MovieControllerTest {
 
         movies = Arrays.asList(movie1, movie2);
 
-         var moviesRecord1 = new MovieSummaryRecord("1",
+        var moviesSummaryRecord1 = new MovieSummaryRecord("1",
                 "Um Sonho de Liberdade",
                 "2 h 22 min",
                 9.8,
                 "https://i.postimg.cc/bwtGy1tf/shawshank-redemption.jpg"
         );
-         var moviesRecord2 = new MovieSummaryRecord("2",
+        var moviesSummaryRecord2 = new MovieSummaryRecord("2",
                 "A Lista de Schindler",
                 "3h 15min",
-                 9.0,
+                9.0,
                 "https://i.postimg.cc/J4hZLyxR/schindler-list.jpg"
         );
 
-         moviesRecord = Arrays.asList(moviesRecord1, moviesRecord2);
+        moviesSummaryRecord = Arrays.asList(moviesSummaryRecord1, moviesSummaryRecord2);
+
+        Set<GenreRecord> geners = new HashSet<>(List.of(new GenreRecord("1", "Drama")));
+
+        movieRecord = new MovieRecord(
+                "128f4544-08bc-4716-9ccd-4d712102b575",
+                "A Lista de Schindler",
+                "3h 15min",
+                9.0,
+                "Durante a Segunda Guerra Mundial, um empresário salva centenas de vidas judias.",
+                1993,
+                "https://i.postimg.cc/J4hZLyxR/schindler-list.jpg",
+                geners
+        );
     }
 
 
@@ -100,7 +118,7 @@ public class MovieControllerTest {
     @DisplayName("Should return all movies successfully")
     void shouldReturnAllMoviesSuccessfully() throws Exception {
         when(repository.findAll()).thenReturn(movies);
-        when(movieSummaryRecordConverter.toCollectionRecord(movies)).thenReturn(moviesRecord);
+        when(movieSummaryRecordConverter.toCollectionRecord(movies)).thenReturn(moviesSummaryRecord);
 
         mockMvc.perform(get("/movies").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -111,6 +129,21 @@ public class MovieControllerTest {
 
     }
 
+    @Test
+    @DisplayName("Should return the correct movie when fetched by UUID")
+    void shouldReturnCorrectMovieWhenSearchedByUuid() throws Exception {
+        var movie = movies.getFirst();
+        movie.setUuid("128f4544-08bc-4716-9ccd-4d712102b575");
+        var movieUuid = movie.getUuid();
+
+        when(searchMovieService.search(movieUuid)).thenReturn(movie);
+        when(movieRecordConverter.toRecord(movie)).thenReturn(movieRecord);
+
+        mockMvc.perform(get("/movies/{movieUuid}", movieUuid)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title", is("A Lista de Schindler")));
+    }
 
 
 }

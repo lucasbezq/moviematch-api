@@ -58,6 +58,7 @@ public class MovieController {
         return movieRecordConverter.toRecord(newMovie);
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:5500/")
     @GetMapping("/recommendations/{genderUuid}")
     public List<MovieSummaryRecord> recommendations(@PathVariable String genderUuid) {
         var movies = movieService.recommendMovies(genderUuid);
