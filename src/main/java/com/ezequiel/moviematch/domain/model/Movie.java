@@ -35,4 +35,15 @@ public class Movie {
         setUuid(UUID.randomUUID().toString());
     }
 
+    public Movie(String title, String duration, Double rating, String synopsis, String imageUrl, Integer releaseYear) {
+        this.title = title;
+        this.duration = duration;
+        this.rating = rating;
+        this.synopsis = synopsis;
+        this.releaseYear = releaseYear;
+        this.imageUrl = imageUrl;
+    }
+
+    public Movie() {}
+
 }

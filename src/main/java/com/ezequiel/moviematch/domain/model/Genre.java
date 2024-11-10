@@ -32,6 +32,11 @@ public class Genre {
         this.name = name;
     }
 
+    public Genre(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public Genre() {}
 
 }
