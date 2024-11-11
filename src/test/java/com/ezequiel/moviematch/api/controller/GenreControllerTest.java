@@ -2,6 +2,7 @@ package com.ezequiel.moviematch.api.controller;
 
 import com.ezequiel.moviematch.api.converter.genre.GenreRecordConverter;
 import com.ezequiel.moviematch.api.record.genre.GenreRecord;
+import com.ezequiel.moviematch.builders.GenreBuilder;
 import com.ezequiel.moviematch.domain.model.Genre;
 import com.ezequiel.moviematch.domain.repository.GenreRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -43,8 +44,8 @@ public class GenreControllerTest {
 
     @BeforeEach
     void setup() {
-        var genre1 = new Genre(1L, "Comédia");
-        var genre2 = new Genre(2L, "Crime");
+        var genre1 = GenreBuilder.builder().withId(1L).withName("Comédia").build();
+        var genre2= GenreBuilder.builder().withId(2L).withName("Crime").build();
         genres = Arrays.asList(genre1, genre2);
 
         var genreRecord1 = new GenreRecord("1", "Comédia");

@@ -25,6 +25,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static com.ezequiel.moviematch.builders.MovieBuilder.oneMovie;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
@@ -61,26 +62,20 @@ public class MovieControllerTest {
     private List<Movie> movies;
     private List<MovieSummaryRecord> moviesSummaryRecord;
     private MovieRecord movieRecord;
+    private Set<GenreRecord> genres;
 
     @BeforeEach
     void setup() {
-        var movie1 = new Movie(
-                "Um Sonho de Liberdade",
-                "2 h 22 min",
-                9.8,
-                "Dois homens presos se reúnem ao longo de vários anos, encontrando consolo e eventual redenção através de atos de decência comum.",
-                "https://i.postimg.cc/bwtGy1tf/shawshank-redemption.jpg",
-                1998
-        );
+        var movie1 = oneMovie().build();
 
-        var movie2 = new Movie(
-                "A Lista de Schindler",
-                "3h 15min",
-                9.0,
-                "Durante a Segunda Guerra Mundial, um empresário salva centenas de vidas judias.",
-                "https://i.postimg.cc/J4hZLyxR/schindler-list.jpg",
-                1993
-        );
+        var movie2 = oneMovie()
+                .withTitle("A Lista de Schindler")
+                .withDuration("3h 15min")
+                .withRating(9.0)
+                .withSynopsis("Durante a Segunda Guerra Mundial, um empresário salva centenas de vidas judias.")
+                .withImageUrl("https://i.postimg.cc/J4hZLyxR/schindler-list.jpg")
+                .withReleaseYear(1993)
+                .build();
 
         movies = Arrays.asList(movie1, movie2);
 
@@ -90,6 +85,7 @@ public class MovieControllerTest {
                 9.8,
                 "https://i.postimg.cc/bwtGy1tf/shawshank-redemption.jpg"
         );
+
         var moviesSummaryRecord2 = new MovieSummaryRecord("2",
                 "A Lista de Schindler",
                 "3h 15min",
@@ -99,7 +95,7 @@ public class MovieControllerTest {
 
         moviesSummaryRecord = Arrays.asList(moviesSummaryRecord1, moviesSummaryRecord2);
 
-        Set<GenreRecord> geners = new HashSet<>(List.of(new GenreRecord("1", "Drama")));
+        genres = new HashSet<>(List.of(new GenreRecord("1", "Drama")));
 
         movieRecord = new MovieRecord(
                 "128f4544-08bc-4716-9ccd-4d712102b575",
@@ -109,10 +105,9 @@ public class MovieControllerTest {
                 "Durante a Segunda Guerra Mundial, um empresário salva centenas de vidas judias.",
                 1993,
                 "https://i.postimg.cc/J4hZLyxR/schindler-list.jpg",
-                geners
+                genres
         );
     }
-
 
     @Test
     @DisplayName("Should return all movies successfully")
@@ -144,6 +139,5 @@ public class MovieControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.title", is("A Lista de Schindler")));
     }
-
 
 }
