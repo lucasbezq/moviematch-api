@@ -1,9 +1,12 @@
 package com.ezequiel.moviematch.domain.service;
 
+import com.ezequiel.moviematch.api.gateway.TmdbGateway;
+import com.ezequiel.moviematch.api.record.movie.MovieResponse;
 import com.ezequiel.moviematch.domain.exception.NotFoundException;
 import com.ezequiel.moviematch.domain.model.Movie;
 import com.ezequiel.moviematch.domain.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +26,12 @@ public class MovieService {
     @Autowired
     private SearchGenreService searchGenreService;
 
+    @Autowired
+    private TmdbGateway gateway;
+
+    @Value("${tmdb.api.authorization}")
+    private String authorization;
+
     @Transactional
     public Movie add(Movie movie) {
         return repository.save(movie);
@@ -41,4 +50,16 @@ public class MovieService {
                 .collect(Collectors.toSet());
     }
 
+    public MovieResponse getPopularMovies(int page, String genreId) {
+        return gateway.getPopularMovies(
+                false,
+                false,
+                "pt-BR",
+                page,
+                "popularity.desc",
+                8,
+                genreId,
+                authorization
+        );
+    }
 }

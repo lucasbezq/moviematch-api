@@ -6,7 +6,8 @@ import lombok.Getter;
 public enum ErrorType {
 
     INVALID_DATA("mensagem-incompreensivel", "Mensagem incompreensível."),
-    RESOURCE_NOT_FOUND("recurso-nao-encontrado", "Recurso não encontrado.");
+    RESOURCE_NOT_FOUND("recurso-nao-encontrado", "Recurso não encontrado."),
+    INTERNAL_ERROR("problema-interno", "Ocorreu um erro inesperado. Tente novamente mais tarde."),;
 
     private String title;
     private String uri;

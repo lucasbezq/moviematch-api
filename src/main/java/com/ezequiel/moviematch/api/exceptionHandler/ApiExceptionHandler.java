@@ -1,5 +1,6 @@
 package com.ezequiel.moviematch.api.exceptionHandler;
 
+import com.ezequiel.moviematch.domain.exception.BusinessException;
 import com.ezequiel.moviematch.domain.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -35,6 +36,17 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<?> handleNotFoundException(NotFoundException e, WebRequest request) {
         var status = HttpStatus.NOT_FOUND;
         var errorType = ErrorType.RESOURCE_NOT_FOUND;
+        var detail = e.getMessage();
+
+        var error = createProblemBuilder(status, errorType, detail).build();
+
+        return handleExceptionInternal(e, error, new HttpHeaders(), status, request);
+    }
+
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<?> handleBusinessException(BusinessException e, WebRequest request) {
+        var status = HttpStatus.INTERNAL_SERVER_ERROR;
+        var errorType = ErrorType.INTERNAL_ERROR;
         var detail = e.getMessage();
 
         var error = createProblemBuilder(status, errorType, detail).build();
