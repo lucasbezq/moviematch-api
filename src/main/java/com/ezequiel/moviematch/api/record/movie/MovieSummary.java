@@ -7,5 +7,6 @@ public record MovieSummary(
         String overview,
         String release_date,
         double vote_average,
+        String poster_path,
         List<Integer> genre_ids
 ) {}

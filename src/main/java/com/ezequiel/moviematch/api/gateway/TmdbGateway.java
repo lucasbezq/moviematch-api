@@ -22,6 +22,7 @@ public interface TmdbGateway {
             @RequestParam(value = "sort_by", defaultValue = "popularity.desc") String sortBy,
             @RequestParam(value = "vote_average.gte", defaultValue = "8") double minVoteAverage,
             @RequestParam(value = "with_genres", defaultValue = "16") String genreId,
+            @RequestParam(value = "region", defaultValue = "pt") String region,
             @RequestHeader("Authorization") String authorization
     );
 
