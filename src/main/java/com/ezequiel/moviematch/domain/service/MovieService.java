@@ -2,7 +2,7 @@ package com.ezequiel.moviematch.domain.service;
 
 import com.ezequiel.moviematch.api.converter.MovieRecordConverter;
 import com.ezequiel.moviematch.api.gateway.TmdbGateway;
-import com.ezequiel.moviematch.api.record.genre.MovieRecord;
+import com.ezequiel.moviematch.api.record.movie.MovieRecord;
 import com.ezequiel.moviematch.domain.exception.BusinessException;
 import com.ezequiel.moviematch.domain.exception.NotFoundException;
 import feign.FeignException;
